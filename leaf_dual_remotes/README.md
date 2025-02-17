@@ -12,6 +12,26 @@ Imports and exports make your brain hurt because of the directionality. Diagram 
 
 You'll need the NATS server binary and the latest NATS CLI. Create some contexts, one for the green, one for blue and one for both red accounts.
 
+The account layout is important.
+
+__GREEN__
+CORE account is only on green.
+ONSITE account is the downstream account for the leaf node to bind to.
+
+__RED__
+UPSTREAM binds to the green ONSITE account.
+DOWNSTREAM binds to the blue's ONSITE account.
+
+__BLUE__
+ONSITE account is the site local account.
+
+
+The behaviour mimics one of shared services etc, where an onsite account can publish to subjects that appear on a central services system.
+But, such a system should not be easily violated regarding its security posture.
+Also, the ONSITE account should be able to receive some messages from the CORE account in the shared services account. This could be for software upgrade reasons, fleet management etc.
+
+The leaf node here acts as a form of 'break glass' and isolation. This could sit in a DMZ somewhere and would satisfy PCI-DSS requirements for a break-glass solution, with the leaf initiating connections both outbound and deeper into the network, towards the blue cluster.
+
 ### Requirements
 
 __core.cloud.>__
