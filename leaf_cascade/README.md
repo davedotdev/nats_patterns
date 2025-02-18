@@ -48,3 +48,25 @@ __onsite.123-123.>__
 2. Publishes made on green and red[UPSTREAM] are ignored by blue
 
 Lockdown connection credentials for further security.
+
+
+
+### JetStream top down KV share
+
+Create a KV on the core
+
+`nats kv add releases`
+`nats put releases test.1 "hello"`
+`nats put releases test.2 "hello"`
+
+ON THE CLOUD, CREATE THE CROSS BOUNDARY STREAM:
+`nats stream add KV_releases --config stream.json`
+
+DO THIS ON THE LEAF
+`nats kv add local_releases --mirror=releases --mirror-domain=hub`
+
+DO THIS ON THE ONSITE CLUSTER
+`nats kv add local_releases --mirror=releases --mirror-domain=hub`
+
+
+The keys should be visible!
