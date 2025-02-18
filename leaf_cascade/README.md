@@ -61,16 +61,16 @@ Create a KV on the core
 
 `nats put releases test.2 "hello"`
 
-On the core, create the cross boundary stream (from the KV:
+On the core leaf binding account, create the cross boundary stream (from the KV:
 
 `nats stream add KV_releases --config stream.json`
 
 Then create a local KV mirror on the leaf:
 
-`nats kv add local_releases --mirror=releases --mirror-domain=hub`
+`nats kv add releases --mirror=releases --mirror-domain=hub`
 
 Create a local KV mirror on the onsite cluster:
 
-`nats kv add local_releases --mirror=releases --mirror-domain=hub`
+`nats kv add releases --mirror=releases --mirror-domain=hub`
 
 The keys should be visible!
