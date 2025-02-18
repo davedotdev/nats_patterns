@@ -56,17 +56,21 @@ Lockdown connection credentials for further security.
 Create a KV on the core
 
 `nats kv add releases`
+
 `nats put releases test.1 "hello"`
+
 `nats put releases test.2 "hello"`
 
-ON THE CLOUD, CREATE THE CROSS BOUNDARY STREAM:
+On the core, create the cross boundary stream (from the KV:
+
 `nats stream add KV_releases --config stream.json`
 
-DO THIS ON THE LEAF
+Then create a local KV mirror on the leaf:
+
 `nats kv add local_releases --mirror=releases --mirror-domain=hub`
 
-DO THIS ON THE ONSITE CLUSTER
-`nats kv add local_releases --mirror=releases --mirror-domain=hub`
+Create a local KV mirror on the onsite cluster:
 
+`nats kv add local_releases --mirror=releases --mirror-domain=hub`
 
 The keys should be visible!
